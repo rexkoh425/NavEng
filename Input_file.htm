@@ -37,14 +37,18 @@
                 <br>
             <label for = "room_num">room number (E?-??-??) or nil :</label> :</label><br>
             <input type = "text" id = "room_num" name = "room_num" pattern="(E.?.-..-.. | nil)" title="E?-??-??" required><br>
-            <input type = "text" list = "directions" id = "directions" name = "directions" required multiple>
-                <datalist id="directions">
-                    <option value="North">
-                    <option value="East">
-                    <option value="South">
-                    <option value="West">
-                </datalist>
-                <br>
+            <label>Select directions:</label><br>
+                <input type="checkbox" id="north" name="directions[]" value="North">
+                <label for="north">North</label><br>
+
+                <input type="checkbox" id="east" name="directions[]" value="East">
+                <label for="east">East</label><br>
+
+                <input type="checkbox" id="south" name="directions[]" value="South">
+                <label for="south">South</label><br>
+
+                <input type="checkbox" id="west" name="directions[]" value="West">
+                <label for="west">West</label><br>
             <br>
             <button type = "submit" id = "submit" > Submit </button>
         </form>
