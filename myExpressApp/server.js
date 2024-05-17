@@ -1,6 +1,6 @@
 const express = require('express');
 const mysql = require('mysql2');
-const port = process.env.port || 5500;
+const port = process.env.port || 5000;
 const path = require('path');
 
 const { spawn } = require('child_process');
@@ -76,13 +76,13 @@ function direction_img(incoming_str , outgoing_str){
 }
 
 app.get('/' , (req ,res) => { 
-    res.sendFile(`C:\\Users\\rexko\\OneDrive\\Desktop\\NUS\\html practice\\Orbital_website` +  '/OrbWeb.htm');
+    res.sendFile(`C:\\Users\\rexko\\OneDrive\\Desktop\\NUS\\Data_collection\\Input_file.htm`);
 });
 
-app.post('/formPost' , (req ,res) => { 
+app.post('/Senddata' , (req ,res) => { 
     const inputData = req.body;
     //checking for empty input
-    if(!inputData.source || !inputData.destination){
+    if(!inputData.room_num){
         return;
     }
     const serializedData = JSON.stringify(inputData);
@@ -92,18 +92,18 @@ app.post('/formPost' , (req ,res) => {
     
     cppProcess.stdout.on('data', (data) => {
         const outputData = data.toString().split("|");
-        console.log(outputData);
+        //console.log(outputData);
         let nodes = outputData[0].split(",");
         const directions = outputData[1].split(",");
         //console.log(directions);
         nodes[0] += "66";
         for(i = 1 ; i < directions.length ; i ++){
             nodes[i] += direction_map(directions[i-1]);//pov
-            nodes[i] += direction_img(directions[i-1] , directions[i]);
+            nodes[i] += direction_img(directions[i-1] , directions[i]);//direction
         }
         nodes[directions.length] += "66";
         const id_string = nodes.join(",");
-        console.log(id_string);
+        //console.log(id_string);
         const query = `SELECT pov , direction,filepath FROM pictures WHERE unique_id IN (${id_string}) ORDER BY FIELD(node_id,${outputData[0]})`;
         let final = "";
         

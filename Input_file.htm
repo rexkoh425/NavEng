@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> NavEng </title>
+        <link rel = "icon" type = "image/x-icon" href = "/Pictures/Favicon.jpeg">
+        <meta charset="UTF-8">
+        <meta name="keywords" content="NavEng, NUS tutorial room">
+        <meta name="description" content="Navigate NUS tutorial rooms">
+    </head>
+    <body>
+        <p> 
+            <ins>Input data here</ins>
+            <ol type = "1">
+                <li> Key in coordinates of current position</li>
+                <li> Specify type and room number </li>
+            </ol>
+        </p>
+        <div>
+        <form action = "/Senddata" method = "post" id = "SDForm" enctype="application/x-www-form-urlencoded">
+            <label for = "x_coordinate">x_coordinate :</label><br>
+            <input type = "number" id = "x_coordinate" name = "x_coordinate" required><br>
+            <label for = "y_coordinate">y_coordinate :</label><br>
+            <input type = "number" id = "y_coordinate" name = "y_coordinate" required><br>
+            <label for = "z_coordinate">z_coordinate :</label><br>
+            <input type = "number" id = "z_coordinate" name = "z_coordinate" required><br>
+            <label for = "self_type">type of picture :</label> :</label><br>
+            <input type = "text" list = "types" id = "self_type" name = "self_type" required>
+                <datalist id="types">
+                    <option value="Lane">
+                    <option value="T_junction">
+                    <option value="Cross_junction">
+                    <option value="Corner">
+                    <option value="Elevator">
+                    <option value="Stairs">
+                    <option value="Room">
+                </datalist>
+                <br>
+            <label for = "room_num">room number (E?-??-??) or nil :</label> :</label><br>
+            <input type = "text" id = "room_num" name = "room_num" pattern="(E.?.-..-.. | nil)" title="E?-??-??" required><br>
+            <input type = "text" list = "directions" id = "directions" name = "directions" required multiple>
+                <datalist id="directions">
+                    <option value="North">
+                    <option value="East">
+                    <option value="South">
+                    <option value="West">
+                </datalist>
+                <br>
+            <br>
+            <button type = "submit" id = "submit" > Submit </button>
+        </form>
+        </div>
+        <div id = "response" class = 'img_container'> </div>
+        <script>
+            fetch('/Senddata', { method: 'POST' })
+                .then(response => {
+                    return response.text();
+                }) // Parse the response as text
+                .then(text => {
+                    return text;
+                })
+                .then(htmlContent => {
+                    // Update the HTML content of the "image_path" div with the received HTML
+                    document.getElementById("response").innerHTML = htmlContent;
+                })
+                .catch(error => console.error('Error:', error));
+        </script>
+    </body>
+</html>
