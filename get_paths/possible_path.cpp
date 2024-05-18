@@ -7,6 +7,7 @@
 #include "rapidjson/document.h"
 #include "rapidjson/writer.h"
 #include "rapidjson/stringbuffer.h"
+#include "directions.h"
 using namespace std;
 using namespace rapidjson;
 
@@ -23,23 +24,26 @@ int main(){
     }
 
     // Access JSON data
-    if (doc.IsObject()) {
-        // Process JSON object
-        // Example: Accessing a key named "example"
-        if (doc.HasMember("source") && doc["source"].IsString()) {
-            std::string value = doc["source"].GetString();
-            //source = stoi(value) - 1;
-        }
+    if (doc.IsArray()) {
 
-        if (doc.HasMember("destination") && doc["destination"].IsString()) {
-            std::string value = doc["destination"].GetString();
-            //dest = stoi(value) - 1  ;
+      const Value& directionsArray = doc.GetArray();
+      bool enter[4] = {false};
+        
+      for(int i = 0 ; i < directionsArray.Size() ; i ++){
+        if (directionsArray[i].IsString()){
+          std::string directions = directionsArray[i].GetString();
+          int direction = DirToInt(directions);
+          enter[direction] = true;
+          //cout << direction << endl;
         }
+      }
+      output_paths(enter);
     } else {
         std::cerr << "Input is not a JSON object" << std::endl;
         return 1;
     }
-
-    
     return 0 ;
+    
+   //bool enter[4] = {1,1,1,1};
+   //output_paths(enter);
 }

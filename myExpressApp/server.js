@@ -2,15 +2,80 @@ const express = require('express');
 const mysql = require('mysql2');
 const port = process.env.port || 5000;
 const path = require('path');
+const fs = require('fs');
 
 const { spawn } = require('child_process');
 const { defaultMaxListeners } = require('events');
+const internal = require('stream');
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended : false}));
 app.use('/Pictures' , express.static(path.join(__dirname,'../Pictures')));
 
+function ProcessData(inputData , current_node , res){
+    //console.log(inputData);
+    const num_of_dir = inputData['directions[]'].length;
+    const serializedData = JSON.stringify(inputData['directions[]']);
+    //console.log(serializedData);
+    const cppProcess = spawn(__dirname + '/../get_paths/possible_path.exe' , []);
+    cppProcess.stdin.write(serializedData);
+    cppProcess.stdin.end();
+
+    cppProcess.stdout.on('data', (data) => {
+        const outputData = data.toString().split("|");
+        //console.log(outputData);
+        const size = outputData.length;
+        for(let i = 0 ; i < size ; i++){
+            outputData[i] = outputData[i].split("_");
+        }   
+        //console.log(outputData);
+        writeFile(inputData , current_node , outputData , num_of_dir , res);
+    });
+
+    // Handle errors and exit events
+    cppProcess.on('error', (error) => {
+        console.error('Error executing C++ process:', error);
+    });
+
+    cppProcess.on('exit', (code) => {
+        console.log('C++ process exited with code:', code);
+    });
+
+    
+}
+
+function writeFile(inputData , current_node ,  outputData , num_of_dir , res){
+
+    const string_array = [];
+    
+    for(let i = 0 ; i < num_of_dir ; i++){
+        let string = `(${current_node},${inputData.x_coordinate},${inputData.y_coordinate},${inputData.z_coordinate}, '${inputData['directions[]'][i]}' , 'None' , '${inputData.self_type}' , '${inputData.room_num}')`;
+        string_array.push(string);
+    }
+    const size = outputData.length;
+    for(let i = 0 ; i < size ; i++){
+        let string = `(${current_node},${inputData.x_coordinate},${inputData.y_coordinate},${inputData.z_coordinate}, ${outputData[i][0]} , ${outputData[i][1]} , ${inputData.self_type} , ${inputData.room_num})`;
+        string_array.push(string);
+    }
+    const filePath = 'C:\\Users\\rexko\\OneDrive\\Desktop\\NUS\\Data_collection\\get_paths\\today_sql_inputs.txt';
+    string_array.forEach((element, index) => {
+        // Add a newline character after each element except the last one
+        //const lineEnding = index < string_array.length - 1 ? '\n' : '';
+        const lineEnding = "\n";
+        fs.appendFile(filePath, element + lineEnding, (err) => {
+            if (err) {
+                console.error(err);
+                res.status(500).send('Error writing to file');
+                return;
+            }
+        });
+
+        if(index == string_array.length-1){
+            res.send("<p>Data has been written to the file.</p>");
+        }
+    });
+}
 const connection = mysql.createConnection({
     host: 'localhost',
     port: '3306',
@@ -27,54 +92,6 @@ connection.connect((err) => {
     console.log('Connected to MySQL');
 });
 
-function template_img(img_path){
-    return `<img src = "${img_path}" alt = "cannot be displayed" width = "100" height = "100"><br> `;
-}
-
-function direction_map(direction_num){
-    const NORTH =  "0";
-    const EAST  = "90";
-    const SOUTH = "180";
-    const WEST  = "-90";
-    switch(direction_num){
-        
-        case NORTH:
-            return "1";
-        case EAST:
-            return "2";
-        case SOUTH:
-            return "3";
-        case WEST:
-            return "4";
-        default : 
-            return "1";
-    }
-}
-
-function direction_img(incoming_str , outgoing_str){
-    let incoming = Number(incoming_str);
-    let outgoing = Number(outgoing_str);
-    outgoing -= incoming;
-    if(outgoing <= -180){
-        outgoing += 180;
-    }else if(outgoing >= 270){
-        outgoing -= 360;
-    }
-    switch(outgoing){
-        
-        case 0:
-            return "1";
-        case 90:
-            return "2";
-        case 180:
-            return "3";
-        case -90:
-            return "4";
-        default : 
-            return "3";
-    }
-}
-
 app.get('/' , (req ,res) => { 
     res.sendFile(`C:\\Users\\rexko\\OneDrive\\Desktop\\NUS\\Data_collection\\Input_file.htm`);
 });
@@ -82,55 +99,22 @@ app.get('/' , (req ,res) => {
 app.post('/Senddata' , (req ,res) => { 
     const inputData = req.body;
     //checking for empty input
+    //console.log(inputData);
     if(!inputData.room_num){
         return;
     }
-    const serializedData = JSON.stringify(inputData);
-    const cppProcess = spawn(__dirname + '/../Dijkstra/main.exe' , []);
-    cppProcess.stdin.write(serializedData);
-    cppProcess.stdin.end();
-    
-    cppProcess.stdout.on('data', (data) => {
-        const outputData = data.toString().split("|");
-        //console.log(outputData);
-        let nodes = outputData[0].split(",");
-        const directions = outputData[1].split(",");
-        //console.log(directions);
-        nodes[0] += "66";
-        for(i = 1 ; i < directions.length ; i ++){
-            nodes[i] += direction_map(directions[i-1]);//pov
-            nodes[i] += direction_img(directions[i-1] , directions[i]);//direction
+
+    const query = `SELECT MAX(node_id) FROM pictures`;
+    let current_node = 0;
+    connection.query(query, (err, results) => {
+        if (err){
+            console.error('Error querying MySQL:', err);
+            return;
         }
-        nodes[directions.length] += "66";
-        const id_string = nodes.join(",");
-        //console.log(id_string);
-        const query = `SELECT pov , direction,filepath FROM pictures WHERE unique_id IN (${id_string}) ORDER BY FIELD(node_id,${outputData[0]})`;
-        let final = "";
-        
-        let workspace = `http://localhost:5500/Pictures`;
-
-        connection.query(query, (err, results) => {
-            if (err){
-              console.error('Error querying MySQL:', err);
-              return;
-            }
-            results.forEach(result => {
-                final += template_img(workspace + `/${result.pov}/${result.direction}/` + result.filepath + ".png");
-            });
-            res.send(final);
-        });
-        
+        current_node = results[0]['MAX(node_id)'];
+        ProcessData(inputData , current_node, res);
     });
-      
-    // Handle errors and exit events
-    cppProcess.on('error', (error) => {
-        console.error('Error executing C++ process:', error);
-    });
-
-    cppProcess.on('exit', (code) => {
-        console.log('C++ process exited with code:', code);
-    });
-    
+    //console.log(current_node);
 });
 
 app.listen(port , () => console.log(`Server started at http://localhost:${port}`));

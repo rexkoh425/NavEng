@@ -35,8 +35,8 @@
                     <option value="Room">
                 </datalist>
                 <br>
-            <label for = "room_num">room number (E?-??-??) or nil :</label> :</label><br>
-            <input type = "text" id = "room_num" name = "room_num" pattern="(E.?.-..-.. | nil)" title="E?-??-??" required><br>
+            <label for = "room_num">room number (E?-??-??) or NIL :</label> :</label><br>
+            <input type = "text" id = "room_num" name = "room_num" required><br>
             <label>Select directions:</label><br>
                 <input type="checkbox" id="north" name="directions[]" value="North">
                 <label for="north">North</label><br>
@@ -52,6 +52,23 @@
             <br>
             <button type = "submit" id = "submit" > Submit </button>
         </form>
+        </div>
+        <div>
+            <br><br><br><br><br><br>
+            <form action = "/CreateEdge" method = "post" id = "EdgeStatement" enctype="application/x-www-form-urlencoded">
+                <label for = "node_num">Node : </label>
+                <input type= "number" id = "node_num" name = "node_num" required>
+                <label for = "direction">is</label>
+                <input type = "text" list = "direction_list" id = "direction" name = "direction" required>
+                    <datalist id="direction_list">
+                        <option value="North">
+                        <option value="East">
+                        <option value="South">
+                        <option value="West">
+                    </datalist>
+                    <br>
+                <button type = "submit" id = "submit_edge" > Submit </button>
+            </form>
         </div>
         <div id = "response" class = 'img_container'> </div>
         <script>
