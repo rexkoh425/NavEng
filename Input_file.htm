@@ -6,6 +6,15 @@
         <meta charset="UTF-8">
         <meta name="keywords" content="NavEng, NUS tutorial room">
         <meta name="description" content="Navigate NUS tutorial rooms">
+        <style>
+            #node_num {
+              width: 50px;
+            }
+
+            #direction{
+                width: 75px;
+            }
+        </style>
     </head>
     <body>
         <p> 
@@ -48,27 +57,20 @@
                 <label for="south">South</label><br>
 
                 <input type="checkbox" id="west" name="directions[]" value="West">
-                <label for="west">West</label><br>
+                <label for="west">West</label><br><br>
+            <label for = "direction">Current Node is </label>
+            <input type = "text" list = "direction_list" id = "direction" name = "direction">
+                <datalist id="direction_list">
+                    <option value="North">
+                    <option value="East">
+                    <option value="South">
+                    <option value="West">
+                </datalist>
+            <label for = "node_num">of</label>
+            <input type= "number" id = "node_num" name = "node_num">
             <br>
             <button type = "submit" id = "submit" > Submit </button>
         </form>
-        </div>
-        <div>
-            <br><br><br><br><br><br>
-            <form action = "/CreateEdge" method = "post" id = "EdgeStatement" enctype="application/x-www-form-urlencoded">
-                <label for = "node_num">Node : </label>
-                <input type= "number" id = "node_num" name = "node_num" required>
-                <label for = "direction">is</label>
-                <input type = "text" list = "direction_list" id = "direction" name = "direction" required>
-                    <datalist id="direction_list">
-                        <option value="North">
-                        <option value="East">
-                        <option value="South">
-                        <option value="West">
-                    </datalist>
-                    <br>
-                <button type = "submit" id = "submit_edge" > Submit </button>
-            </form>
         </div>
         <div id = "response" class = 'img_container'> </div>
         <script>

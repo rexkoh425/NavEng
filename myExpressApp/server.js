@@ -45,6 +45,17 @@ function ProcessData(inputData , current_node , res){
     
 }
 
+function insert_coor_id_pair(node , x_coordinate ,  y_coordinate , z_coordinate){
+    const query = `INSERT INTO coor_id_pair(node_id,x_coordinate, y_coordinate, z_coordinate)
+    VALUES (${node},${x_coordinate},${y_coordinate},${z_coordinate});`
+    connection.query(query, (err, results) => {
+        if (err){
+            console.error('Error querying MySQL:', err);
+            return;
+        }
+        console.log(`coordinates of ${node} inserted into database`);
+    });
+}
 function writeFile(inputData , current_node ,  outputData , num_of_dir , res){
 
     const string_array = [];
@@ -76,6 +87,26 @@ function writeFile(inputData , current_node ,  outputData , num_of_dir , res){
         }
     });
 }
+
+function WriteEdge(source , dest , weight , direction){
+    const filePath = 'C:\\Users\\rexko\\OneDrive\\Desktop\\NUS\\Data_collection\\get_paths\\Edge_inputs.txt'
+    const element = `g.addEdge(${source}, ${dest}, ${weight} , ${direction});` 
+    fs.appendFile(filePath, element, (err) => {
+        if (err) {
+            console.error(err);
+            res.status(500).send('Error writing to file');
+            return;
+        }
+        console.log("Edge has been written to Edge_inputs.txt");
+    });
+}
+
+function abs(number){
+    if(number > 0){
+        return number;
+    }
+    return  0 - number;
+}
 const connection = mysql.createConnection({
     host: 'localhost',
     port: '3306',
@@ -104,14 +135,24 @@ app.post('/Senddata' , (req ,res) => {
         return;
     }
 
-    const query = `SELECT MAX(node_id) FROM pictures`;
-    let current_node = 0;
+    const query = `SELECT MAX(node_id) FROM coor_id_pair`;
     connection.query(query, (err, results) => {
         if (err){
             console.error('Error querying MySQL:', err);
             return;
         }
-        current_node = results[0]['MAX(node_id)'];
+        const current_node = results[0]['MAX(node_id)'] + 1;
+        insert_coor_id_pair(current_node , inputData.x_coordinate , inputData.y_coordinate , inputData.z_coordinate);
+        const sub_query = `SELECT x_coordinate , y_coordinate , z_coordinate FROM coor_id_pair WHERE node_id = ${inputData.node_num}`;
+        connection.query(sub_query, (err, results) =>{
+            if (err){
+                console.error('Error querying MySQL:', err);
+                return;
+            }
+            //console.log(results);
+            const weight = abs(inputData.x_coordinate - results[0]['x_coordinate']) + abs(inputData.y_coordinate - results[0]['y_coordinate']) + abs(inputData.z_coordinate - results[0]['z_coordinate']);
+            WriteEdge(inputData.node_num - 1, current_node - 1 , weight , inputData.direction.toUpperCase());
+        });
         ProcessData(inputData , current_node, res);
     });
     //console.log(current_node);
