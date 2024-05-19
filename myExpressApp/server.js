@@ -13,11 +13,22 @@ app.use(express.json());
 app.use(express.urlencoded({ extended : false}));
 app.use('/Pictures' , express.static(path.join(__dirname,'../Pictures')));
 
+function ProcessRoom(inputData , current_node , res){
+    const element = `(${current_node},${inputData.x_coordinate},${inputData.y_coordinate},${inputData.z_coordinate}, 'None' , 'None' , ${inputData.self_type} , ${inputData.room_num})`;
+    const filePath = 'C:\\Users\\rexko\\OneDrive\\Desktop\\NUS\\Data_collection\\get_paths\\today_sql_inputs.txt';
+    fs.appendFile(filePath, element + "\n", (err) => {
+        if (err) {
+            console.error(err);
+            res.status(500).send('Error writing to file');
+            return;
+        }
+        res.send("<p>Data has been written to the file.</p>");
+    });
+}
 function ProcessData(inputData , current_node , res){
-    //console.log(inputData);
+  
     const num_of_dir = inputData['directions[]'].length;
     const serializedData = JSON.stringify(inputData['directions[]']);
-    //console.log(serializedData);
     const cppProcess = spawn(__dirname + '/../get_paths/possible_path.exe' , []);
     cppProcess.stdin.write(serializedData);
     cppProcess.stdin.end();
@@ -40,9 +51,7 @@ function ProcessData(inputData , current_node , res){
 
     cppProcess.on('exit', (code) => {
         console.log('C++ process exited with code:', code);
-    });
-
-    
+    }); 
 }
 
 function insert_coor_id_pair(node , x_coordinate ,  y_coordinate , z_coordinate){
@@ -89,8 +98,8 @@ function writeFile(inputData , current_node ,  outputData , num_of_dir , res){
 }
 
 function WriteEdge(source , dest , weight , direction){
-    const filePath = 'C:\\Users\\rexko\\OneDrive\\Desktop\\NUS\\Data_collection\\get_paths\\Edge_inputs.txt'
-    const element = `g.addEdge(${source}, ${dest}, ${weight} , ${direction});` 
+    const filePath = 'C:\\Users\\rexko\\OneDrive\\Desktop\\NUS\\Data_collection\\get_paths\\Edge_inputs.txt';
+    const element = `g.addEdge(${source}, ${dest}, ${weight} , ${direction});` + "\n"; 
     fs.appendFile(filePath, element, (err) => {
         if (err) {
             console.error(err);
@@ -153,7 +162,11 @@ app.post('/Senddata' , (req ,res) => {
             const weight = abs(inputData.x_coordinate - results[0]['x_coordinate']) + abs(inputData.y_coordinate - results[0]['y_coordinate']) + abs(inputData.z_coordinate - results[0]['z_coordinate']);
             WriteEdge(inputData.node_num - 1, current_node - 1 , weight , inputData.direction.toUpperCase());
         });
-        ProcessData(inputData , current_node, res);
+        if(inputData['self_type'] == "Room"){
+            ProcessRoom(inputData , current_node , res);
+        }else{
+            ProcessData(inputData , current_node, res);
+        }
     });
     //console.log(current_node);
 });
