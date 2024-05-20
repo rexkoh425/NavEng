@@ -25,6 +25,28 @@ function ProcessRoom(inputData , current_node , res){
         res.send("<p>Data has been written to the file.</p>");
     });
 }
+
+function ProcessElevator(inputData , current_node , res){
+    const string_array = [];
+    const num_of_dir = inputData['directions[]'].length;
+    for(let i = 0 ; i < num_of_dir ; i ++){
+        string_array.push(`(${current_node},${inputData.x_coordinate},${inputData.y_coordinate},${inputData.z_coordinate}, 'None' , ${inputData['directions[]'][i]} , ${inputData.self_type} , ${inputData.room_num})`);
+    }
+   
+    const filePath = 'C:\\Users\\rexko\\OneDrive\\Desktop\\NUS\\Data_collection\\get_paths\\today_sql_inputs.txt';
+    string_array.forEach((element, index) => {
+        fs.appendFile(filePath, element + "\n", (err) => {
+            if (err) {
+                console.error(err);
+                res.status(500).send('Error writing to file');
+                return;
+            }
+        });
+        if(index == string_array.length-1){
+            res.send("<p>Data has been written to the file.</p>");
+        }
+    });
+}
 function ProcessData(inputData , current_node , res){
   
     const num_of_dir = inputData['directions[]'].length;
@@ -98,6 +120,7 @@ function writeFile(inputData , current_node ,  outputData , num_of_dir , res){
 }
 
 function WriteEdge(source , dest , weight , direction){
+    
     const filePath = 'C:\\Users\\rexko\\OneDrive\\Desktop\\NUS\\Data_collection\\get_paths\\Edge_inputs.txt';
     const element = `g.addEdge(${source}, ${dest}, ${weight} , ${direction});` + "\n"; 
     fs.appendFile(filePath, element, (err) => {
@@ -158,12 +181,15 @@ app.post('/Senddata' , (req ,res) => {
                 console.error('Error querying MySQL:', err);
                 return;
             }
+            
             //console.log(results);
             const weight = abs(inputData.x_coordinate - results[0]['x_coordinate']) + abs(inputData.y_coordinate - results[0]['y_coordinate']) + abs(inputData.z_coordinate - results[0]['z_coordinate']);
             WriteEdge(inputData.node_num - 1, current_node - 1 , weight , inputData.direction.toUpperCase());
         });
         if(inputData['self_type'] == "Room"){
             ProcessRoom(inputData , current_node , res);
+        }else if(inputData['self_type'] == "Elevator"){
+            ProcessElevator(inputData,  current_node , res);
         }else{
             ProcessData(inputData , current_node, res);
         }
