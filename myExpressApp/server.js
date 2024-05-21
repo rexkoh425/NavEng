@@ -13,8 +13,24 @@ app.use(express.json());
 app.use(express.urlencoded({ extended : false}));
 app.use('/Pictures' , express.static(path.join(__dirname,'../Pictures')));
 
+function opposite(enter_dir){
+    switch(enter_dir){
+        case "North" : 
+            return "South";
+        case "East" : 
+            return "West";
+        case "South" : 
+            return "North";
+        case "West" : 
+            return "East";
+        case "Up" :
+            return "Down";
+        case "Down" :
+            return "Up";
+    }
+}
 function ProcessRoom(inputData , current_node , res){
-    const element = `(${current_node},${inputData.x_coordinate},${inputData.y_coordinate},${inputData.z_coordinate}, 'None' , 'None' , ${inputData.self_type} , ${inputData.room_num})`;
+    const element = `(${current_node},${inputData.x_coordinate},${inputData.y_coordinate},${inputData.z_coordinate}, 'None' , 'None' , '${inputData.self_type}' , '${inputData.room_num}'),`;
     const filePath = 'C:\\Users\\rexko\\OneDrive\\Desktop\\NUS\\Data_collection\\get_paths\\today_sql_inputs.txt';
     fs.appendFile(filePath, element + "\n", (err) => {
         if (err) {
@@ -29,10 +45,11 @@ function ProcessRoom(inputData , current_node , res){
 function ProcessElevator(inputData , current_node , res){
     const string_array = [];
     const num_of_dir = inputData['directions[]'].length;
-    for(let i = 0 ; i < num_of_dir ; i ++){
-        string_array.push(`(${current_node},${inputData.x_coordinate},${inputData.y_coordinate},${inputData.z_coordinate}, 'None' , ${inputData['directions[]'][i]} , ${inputData.self_type} , ${inputData.room_num})`);
+    const enter_dir = inputData['directions[]'][0];
+    for(let i = 1 ; i < num_of_dir ; i ++){
+        string_array.push(`(${current_node},${inputData.x_coordinate},${inputData.y_coordinate},${inputData.z_coordinate}, '${enter_dir}' , '${inputData['directions[]'][i]}' , '${inputData.self_type}' , '${inputData.room_num}'),`);
     }
-   
+    string_array.push(`(${current_node},${inputData.x_coordinate},${inputData.y_coordinate},${inputData.z_coordinate}, '${opposite(enter_dir)}' , 'None' , '${inputData.self_type}' , '${inputData.room_num}'),`);
     const filePath = 'C:\\Users\\rexko\\OneDrive\\Desktop\\NUS\\Data_collection\\get_paths\\today_sql_inputs.txt';
     string_array.forEach((element, index) => {
         fs.appendFile(filePath, element + "\n", (err) => {
@@ -92,12 +109,12 @@ function writeFile(inputData , current_node ,  outputData , num_of_dir , res){
     const string_array = [];
     
     for(let i = 0 ; i < num_of_dir ; i++){
-        let string = `(${current_node},${inputData.x_coordinate},${inputData.y_coordinate},${inputData.z_coordinate}, '${inputData['directions[]'][i]}' , 'None' , '${inputData.self_type}' , '${inputData.room_num}')`;
+        let string = `(${current_node},${inputData.x_coordinate},${inputData.y_coordinate},${inputData.z_coordinate}, '${inputData['directions[]'][i]}' , 'None' , '${inputData.self_type}' , '${inputData.room_num}'),`;
         string_array.push(string);
     }
     const size = outputData.length;
     for(let i = 0 ; i < size ; i++){
-        let string = `(${current_node},${inputData.x_coordinate},${inputData.y_coordinate},${inputData.z_coordinate}, ${outputData[i][0]} , ${outputData[i][1]} , ${inputData.self_type} , ${inputData.room_num})`;
+        let string = `(${current_node},${inputData.x_coordinate},${inputData.y_coordinate},${inputData.z_coordinate}, '${outputData[i][0]}' , '${outputData[i][1]}' , '${inputData.self_type}' , '${inputData.room_num}'),`;
         string_array.push(string);
     }
     const filePath = 'C:\\Users\\rexko\\OneDrive\\Desktop\\NUS\\Data_collection\\get_paths\\today_sql_inputs.txt';
