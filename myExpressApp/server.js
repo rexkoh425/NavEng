@@ -108,17 +108,20 @@ function insert_coor_id_pair(node , x_coordinate ,  y_coordinate , z_coordinate)
 function writeFile(inputData , current_node ,  outputData , num_of_dir , res){
 
     const string_array = [];
-    
+    const names = [];
     for(let i = 0 ; i < num_of_dir ; i++){
         let string = `(${current_node},${inputData.x_coordinate},${inputData.y_coordinate},${inputData.z_coordinate}, '${inputData['directions[]'][i]}' , 'None' , '${inputData.self_type}' , '${inputData.room_num}'),`;
         string_array.push(string);
+        let name = `<div>${current_node}_${inputData.x_coordinate}_${inputData.y_coordinate}_${inputData.z_coordinate}_${inputData['directions[]'][i]}_None_${inputData.self_type}_${inputData.room_num}</div><br>`;
+        names.push(name);
+        
     }
     const size = outputData.length;
     for(let i = 0 ; i < size ; i++){
         let string = `(${current_node},${inputData.x_coordinate},${inputData.y_coordinate},${inputData.z_coordinate}, '${outputData[i][0]}' , '${outputData[i][1]}' , '${inputData.self_type}' , '${inputData.room_num}'),`;
         string_array.push(string);
     }
-    const filePath = 'C:\\Users\\rexko\\OneDrive\\Desktop\\NUS\\Data_collection\\get_paths\\today_sql_inputs.txt';
+    const filePath = `${__dirname}\\..\\get_paths\\today_sql_inputs.txt`;
     string_array.forEach((element, index) => {
         // Add a newline character after each element except the last one
         //const lineEnding = index < string_array.length - 1 ? '\n' : '';
@@ -132,14 +135,30 @@ function writeFile(inputData , current_node ,  outputData , num_of_dir , res){
         });
 
         if(index == string_array.length-1){
-            res.send("<p>Data has been written to the file.</p>");
+            let response = "<p>Data has been written to the file.</p><br><br>";
+            for(let i = 0 ; i < num_of_dir ; i++){
+                response += names[i];
+            }
+            res.send(response);
         }
     });
 }
 
+function WriteDesmos(inputData , results){
+    const filePath = `${__dirname}\\..\\get_paths\\Desmos_input.txt`;
+    const element =  `Vector((${results[0]['x_coordinate']} , ${results[0]['y_coordinate']} , ${results[0]['z_coordinate']}) ,(${inputData.x_coordinate} , ${inputData.y_coordinate} , ${inputData.z_coordinate}))` + "\n";
+    fs.appendFile(filePath, element, (err) => {
+        if (err) {
+            console.error(err);
+            res.status(500).send('Error writing to file');
+            return;
+        }
+        console.log("Desmos input has been generated");
+    });
+}
 function WriteEdge(source , dest , weight , direction){
     
-    const filePath = 'C:\\Users\\rexko\\OneDrive\\Desktop\\NUS\\Data_collection\\get_paths\\Edge_inputs.txt';
+    const filePath = `${__dirname}\\..\\get_paths\\Edge_inputs.txt`;
     const element = `g.addEdge(${source}, ${dest}, ${weight} , ${direction});` + "\n"; 
     fs.appendFile(filePath, element, (err) => {
         if (err) {
@@ -200,9 +219,9 @@ app.post('/Senddata' , (req ,res) => {
                 return;
             }
             
-            //console.log(results);
             const weight = abs(inputData.x_coordinate - results[0]['x_coordinate']) + abs(inputData.y_coordinate - results[0]['y_coordinate']) + abs(inputData.z_coordinate - results[0]['z_coordinate']);
             WriteEdge(inputData.node_num - 1, current_node - 1 , weight , inputData.direction.toUpperCase());
+            WriteDesmos(inputData , results);
         });
         if(inputData['self_type'] == "Room"){
             ProcessRoom(inputData , current_node , res);
