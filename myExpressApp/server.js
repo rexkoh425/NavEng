@@ -64,6 +64,7 @@ function ProcessElevator(inputData , current_node , res){
         }
     });
 }
+
 function ProcessData(inputData , current_node , res){
   
     const num_of_dir = inputData['directions[]'].length;
@@ -214,4 +215,22 @@ app.post('/Senddata' , (req ,res) => {
     //console.log(current_node);
 });
 
+app.post('/deleteData' , (req,res) => {
+    const query = `SELECT MAX(node_id) FROM coor_id_pair`;
+    connection.query(query, (err, results) =>{
+        if (err){
+            console.error('Error querying MySQL:', err);
+            return;
+        }
+        const current_node = results[0]['MAX(node_id)']; 
+        const sub_query = `DELETE FROM coor_id_pair WHERE node_id = ${current_node}`;
+        connection.query(sub_query, (err, results) =>{
+            if (err){
+                console.error('Error querying MySQL:', err);
+                return;
+            }
+            res.send(`Node ${current_node} has been deleted from coor_id_pair table`);
+        });
+    });
+});
 app.listen(port , () => console.log(`Server started at http://localhost:${port}`));

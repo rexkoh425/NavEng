@@ -80,6 +80,12 @@
             <button type = "submit" id = "submit" > Submit </button>
         </form>
         </div>
+        <div>
+            <form action = "/deleteData" method = "post" id = "deletenode">
+                <p> Press this button to delete lastest node</p>
+                <button type = "submit" id = "delete"> Delete</button>
+            </form>
+        </div>
         <div id = "response" class = 'img_container'> </div>
         <script>
             fetch('/Senddata', { method: 'POST' })
