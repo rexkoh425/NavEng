@@ -31,7 +31,7 @@ function opposite(enter_dir){
 }
 function ProcessRoom(inputData , current_node , res){
     const element = `(${current_node},${inputData.x_coordinate},${inputData.y_coordinate},${inputData.z_coordinate}, 'None' , 'None' , '${inputData.self_type}' , '${inputData.room_num}'),`;
-    const filePath = 'C:\\Users\\rexko\\OneDrive\\Desktop\\NUS\\Data_collection\\get_paths\\today_sql_inputs.txt';
+    const filePath = `${__dirname}\\..\\get_paths\\today_sql_inputs.txt`;
     fs.appendFile(filePath, element + "\n", (err) => {
         if (err) {
             console.error(err);
@@ -50,7 +50,7 @@ function ProcessElevator(inputData , current_node , res){
         string_array.push(`(${current_node},${inputData.x_coordinate},${inputData.y_coordinate},${inputData.z_coordinate}, '${enter_dir}' , '${inputData['directions[]'][i]}' , '${inputData.self_type}' , '${inputData.room_num}'),`);
     }
     string_array.push(`(${current_node},${inputData.x_coordinate},${inputData.y_coordinate},${inputData.z_coordinate}, '${opposite(enter_dir)}' , 'None' , '${inputData.self_type}' , '${inputData.room_num}'),`);
-    const filePath = 'C:\\Users\\rexko\\OneDrive\\Desktop\\NUS\\Data_collection\\get_paths\\today_sql_inputs.txt';
+    const filePath = `${__dirname}\\get_paths\\today_sql_inputs.txt`;
     string_array.forEach((element, index) => {
         fs.appendFile(filePath, element + "\n", (err) => {
             if (err) {
@@ -193,7 +193,7 @@ connection.connect((err) => {
 });
 
 app.get('/' , (req ,res) => { 
-    res.sendFile(`C:\\Users\\rexko\\OneDrive\\Desktop\\NUS\\Data_collection\\Input_file.htm`);
+    res.sendFile(`C:\\NUS\\Data_collection\\Input_file.htm`);
 });
 
 app.post('/Senddata' , (req ,res) => { 
