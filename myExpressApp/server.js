@@ -232,7 +232,7 @@ app.post('/Senddata' , (req ,res) => {
         });
         if(inputData['self_type'] == "Room"){
             ProcessRoom(inputData , current_node , res);
-        }else if(inputData['self_type'] == "Elevator"){
+        }else if(inputData['self_type'] == "Elevator" || inputData['self_type'] == "Stairs"){
             ProcessElevator(inputData,  current_node , res);
         }else{
             ProcessData(inputData , current_node, res);
