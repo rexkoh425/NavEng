@@ -32,25 +32,31 @@ function opposite(enter_dir){
 function ProcessRoom(inputData , current_node , res){
     const element = `(${current_node},${inputData.x_coordinate},${inputData.y_coordinate},${inputData.z_coordinate}, 'None' , 'None' , '${inputData.self_type}' , '${inputData.room_num}'),`;
     const filePath = `${__dirname}\\..\\get_paths\\today_sql_inputs.txt`;
+    let HTML_output = "<p>Data has been written to the file.</p><br>";
+    HTML_output += `<div>${current_node}_${inputData.x_coordinate}_${inputData.y_coordinate}_${inputData.z_coordinate}_None_None_${inputData.self_type}_${inputData.room_num}</div><br>`;
     fs.appendFile(filePath, element + "\n", (err) => {
         if (err) {
             console.error(err);
             res.status(500).send('Error writing to file');
             return;
         }
-        res.send("<p>Data has been written to the file.</p>");
+        res.send(HTML_output);
     });
 }
 
 function ProcessElevator(inputData , current_node , res){
     const string_array = [];
+    let HTML_output = "<p>Data has been written to the file.</p>";
     const num_of_dir = inputData['directions[]'].length;
     const enter_dir = inputData['directions[]'][0];
     for(let i = 1 ; i < num_of_dir ; i ++){
         string_array.push(`(${current_node},${inputData.x_coordinate},${inputData.y_coordinate},${inputData.z_coordinate}, '${enter_dir}' , '${inputData['directions[]'][i]}' , '${inputData.self_type}' , '${inputData.room_num}'),`);
     }
+    string_array.push(`(${current_node},${inputData.x_coordinate},${inputData.y_coordinate},${inputData.z_coordinate}, '${enter_dir}' , 'None' , '${inputData.self_type}' , '${inputData.room_num}'),`);
     string_array.push(`(${current_node},${inputData.x_coordinate},${inputData.y_coordinate},${inputData.z_coordinate}, '${opposite(enter_dir)}' , 'None' , '${inputData.self_type}' , '${inputData.room_num}'),`);
-    const filePath = `${__dirname}\\get_paths\\today_sql_inputs.txt`;
+    HTML_output += `${current_node}_${inputData.x_coordinate}_${inputData.y_coordinate}_${inputData.z_coordinate}_${enter_dir}_None_${inputData.self_type}_${inputData.room_num}`;
+    HTML_output += `<div>${current_node}_${inputData.x_coordinate}_${inputData.y_coordinate}_${inputData.z_coordinate}_${opposite(enter_dir)}_None_${inputData.self_type}_${inputData.room_num}</div><br>`;
+    const filePath = `${__dirname}\\..\\get_paths\\today_sql_inputs.txt`;
     string_array.forEach((element, index) => {
         fs.appendFile(filePath, element + "\n", (err) => {
             if (err) {
@@ -60,7 +66,7 @@ function ProcessElevator(inputData , current_node , res){
             }
         });
         if(index == string_array.length-1){
-            res.send("<p>Data has been written to the file.</p>");
+            res.send(HTML_output);
         }
     });
 }
@@ -146,7 +152,7 @@ function writeFile(inputData , current_node ,  outputData , num_of_dir , res){
 
 function WriteDesmos(inputData , results){
     const filePath = `${__dirname}\\..\\get_paths\\Desmos_input.txt`;
-    const element =  `Vector((${results[0]['x_coordinate']} , ${results[0]['y_coordinate']} , ${results[0]['z_coordinate']}) ,(${inputData.x_coordinate} , ${inputData.y_coordinate} , ${inputData.z_coordinate}))` + "\n";
+    const element =  `vector((${results[0]['x_coordinate']} , ${results[0]['y_coordinate']} , ${results[0]['z_coordinate']}) ,(${inputData.x_coordinate} , ${inputData.y_coordinate} , ${inputData.z_coordinate}))` + "\n";
     fs.appendFile(filePath, element, (err) => {
         if (err) {
             console.error(err);
@@ -193,7 +199,8 @@ connection.connect((err) => {
 });
 
 app.get('/' , (req ,res) => { 
-    res.sendFile(`C:\\NUS\\Data_collection\\Input_file.htm`);
+    const filePath = path.join(__dirname, '..', 'Input_file.htm');
+    res.sendFile(filePath);
 });
 
 app.post('/Senddata' , (req ,res) => { 
