@@ -14,6 +14,10 @@
             #direction{
                 width: 75px;
             }
+
+            #distance{
+                width: 50px;
+            }
         </style>
     </head>
     <body>
@@ -26,12 +30,6 @@
         </p>
         <div>
         <form action = "/Senddata" method = "post" id = "SDForm" enctype="application/x-www-form-urlencoded">
-            <label for = "x_coordinate">x_coordinate :</label><br>
-            <input type = "number" id = "x_coordinate" name = "x_coordinate" required><br>
-            <label for = "y_coordinate">y_coordinate :</label><br>
-            <input type = "number" id = "y_coordinate" name = "y_coordinate" required><br>
-            <label for = "z_coordinate">z_coordinate :</label><br>
-            <input type = "number" id = "z_coordinate" name = "z_coordinate" required><br>
             <label for = "self_type">type of picture :</label> :</label><br>
             <input type = "text" list = "types" id = "self_type" name = "self_type" required>
                 <datalist id="types">
@@ -76,6 +74,8 @@
                 </datalist>
             <label for = "node_num">of</label>
             <input type= "number" id = "node_num" name = "node_num">
+            <label for = "distance">with distance : </label>
+            <input type="number" id = "distance" name = "distance">
             <br>
             <button type = "submit" id = "submit" > Submit </button>
         </form>
