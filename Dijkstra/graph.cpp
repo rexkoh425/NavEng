@@ -1,6 +1,13 @@
 #include "graph.h"
 #include <fstream>
 
+#define NORTH 0
+#define EAST 90
+#define SOUTH 180
+#define WEST -90
+#define UP 45
+#define DOWN -45
+
 using std::endl;
 
 std::ostream& operator<<(std::ostream& os, GraphEdge const& e) {
