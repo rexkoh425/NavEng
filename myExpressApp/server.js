@@ -237,13 +237,13 @@ app.post('/Senddata' , (req ,res) => {
                     destination[0]['x_coordinate'] = `${Number(destination[0]['x_coordinate']) + distance}`;
                     break;
                 case "West" :
-                    destination[0]['x_coordinate'] = `${Number(destination[0]['x_coordinate']) + distance}`;
+                    destination[0]['x_coordinate'] = `${Number(destination[0]['x_coordinate']) - distance}`;
                     break;
                 case "Up" :
                     destination[0]['z_coordinate'] = `${Number(destination[0]['z_coordinate']) + distance}`;
                     break;
                 case "Down" :
-                    destination[0]['z_coordinate'] = `${Number(destination[0]['z_coordinate']) + distance}`;
+                    destination[0]['z_coordinate'] = `${Number(destination[0]['z_coordinate']) - distance}`;
                     break;
             }
           

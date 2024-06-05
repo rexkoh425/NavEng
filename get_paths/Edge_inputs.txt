@@ -1,0 +1,41 @@
+g.addEdge(22, 24, 90 , EAST);
+g.addEdge(24, 25, 85 , EAST);
+g.addEdge(25, 26, 170 , EAST);
+g.addEdge(26, 27, 20 , EAST);
+g.addEdge(26, 28, 40 , SOUTH);
+g.addEdge(28, 29, 40 , SOUTH);
+g.addEdge(29, 30, 10 , SOUTH);
+g.addEdge(28, 31, 20 , EAST);
+g.addEdge(31, 32, 1 , UP);
+g.addEdge(32, 33, 20 , WEST);
+g.addEdge(33, 34, 40 , NORTH);
+g.addEdge(34, 35, 20 , EAST);
+g.addEdge(33, 36, 40 , SOUTH);
+g.addEdge(36, 37, 40 , WEST);
+g.addEdge(27, 35, 1 , UP); //extra
+g.addEdge(37, 38, 65 , SOUTH);
+g.addEdge(38, 39, 150 , SOUTH);
+g.addEdge(37, 40, 80 , NORTH);
+g.addEdge(40, 41, 135 , NORTH);
+g.addEdge(41, 42, 135 , WEST);
+g.addEdge(42, 43, 20 , NORTH);
+g.addEdge(42, 44, 60 , SOUTH);
+g.addEdge(44, 45, 40 , WEST);
+g.addEdge(45, 46, 30 , NORTH);
+g.addEdge(45, 47, 50 , SOUTH);
+g.addEdge(47, 48, 20 , WEST);
+g.addEdge(45, 49, 20 , WEST);
+g.addEdge(23, 48, 1 , UP); //extra
+g.addEdge(4, 49, 1 , UP); //extra
+g.addEdge(44, 50, 135 , SOUTH);
+g.addEdge(50, 51, 20 , WEST);
+g.addEdge(50, 52, 70 , SOUTH);
+g.addEdge(52, 53, 20 , WEST);
+g.addEdge(52, 54, 50 , SOUTH);
+g.addEdge(54, 55, 20 , WEST);
+g.addEdge(54, 56, 25 , SOUTH);
+g.addEdge(56, 57, 20 , WEST);
+g.addEdge(56, 58, 130 , SOUTH);
+g.addEdge(58, 59, 20 , WEST);
+g.addEdge(58, 60, 35 , SOUTH);
+g.addEdge(60, 61, 20 , WEST);
