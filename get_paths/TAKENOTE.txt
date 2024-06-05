@@ -1,1 +1,2 @@
 AT NODE 45, didnt include lab
+NODE 26 , arrows vs naming is a bit weird
