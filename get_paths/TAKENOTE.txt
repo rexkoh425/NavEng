@@ -5,7 +5,8 @@ TAKE ONLY IMPT STUFF LIKE TUT ROOMS but leave a small NODE
 
 
 ADD stairs in middle of EA
-NODE 4 ELEVATOR PIC SEEMS TO BE WRONG
+DO LEVEL 1 OF E1A + remaining of dean office at level 7
+DO STAIRS AT DEAN OFFICE SIDE
+REMEMBER ADD EDGE FOR EXTRA STAIRS in E1A
 
 E1A floor 4 = EA floor 7
-LEVEL 1 OF E1A 
