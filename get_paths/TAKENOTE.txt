@@ -1,2 +1,11 @@
 AT NODE 45, didnt include lab
 NODE 26 , arrows vs naming is a bit weird
+
+TAKE ONLY IMPT STUFF LIKE TUT ROOMS but leave a small NODE
+
+
+ADD stairs in middle of EA
+NODE 4 ELEVATOR PIC SEEMS TO BE WRONG
+
+E1A floor 4 = EA floor 7
+LEVEL 1 OF E1A 

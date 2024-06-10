@@ -16,6 +16,7 @@ Non-free connections dont use Up/down to add elevator/stairs nodes
 
 EA floor 1-2 Lobby 1
 EA floor 2-3 Lobby 2
+EA floor 2-3 Lobby 1
 
 NOTE 
 
@@ -31,4 +32,3 @@ NAME PICS
 
 
 TO-DO
-change algo to remove coordinate input
