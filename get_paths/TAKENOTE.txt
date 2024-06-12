@@ -5,8 +5,7 @@ TAKE ONLY IMPT STUFF LIKE TUT ROOMS but leave a small NODE
 
 
 ADD stairs in middle of EA
-DO LEVEL 1 OF E1A + remaining of dean office at level 7
-DO STAIRS AT DEAN OFFICE SIDE
+DO LEVEL 1 OF E1A
 REMEMBER ADD EDGE FOR EXTRA STAIRS in E1A
 
 E1A floor 4 = EA floor 7

@@ -1,0 +1,120 @@
+
+g.addEdge(239, 249, 50 , NORTH);
+g.addEdge(249, 250, 65 , EAST);
+g.addEdge(250, 251, 180 , EAST);
+g.addEdge(251, 252, 260 , WEST);
+g.addEdge(252, 253, 40 , NORTH);
+g.addEdge(178, 253, 1 , UP);//level 6 - 7 connect dean office
+g.addEdge(250, 254, 125 , EAST);
+g.addEdge(254, 255, 20 , SOUTH);
+g.addEdge(254, 256, 15 , EAST);
+g.addEdge(256, 257, 20 , SOUTH);
+g.addEdge(256, 258, 230 , EAST);
+g.addEdge(258, 259, 20 , SOUTH);
+g.addEdge(258, 260, 40 , EAST);
+g.addEdge(261 , 237 , 1 , UP);//E1A FLOOR 4-5 stairs alleyside
+g.addEdge(260, 261, 210 , SOUTH);
+g.addEdge(260, 262, 300 , EAST);
+g.addEdge(262, 263, 55 , NORTH);
+g.addEdge(263, 264, 30 , EAST);
+g.addEdge(263, 265, 30 , WEST);
+g.addEdge(265, 266, 1 , UP);
+g.addEdge(266, 267, 30 , EAST);
+g.addEdge(267, 268, 30 , EAST);
+g.addEdge(266, 269, 1 , UP);
+g.addEdge(269, 270, 30 , EAST);
+g.addEdge(270, 271, 30 , EAST);
+g.addEdge(269, 272, 1 , UP);
+g.addEdge(272, 273, 30 , EAST);
+g.addEdge(273, 274, 30 , EAST);
+g.addEdge(272, 275, 1 , UP);
+g.addEdge(275, 276, 30 , EAST);
+g.addEdge(276, 277, 30 , EAST);
+g.addEdge(275, 278, 1 , UP);
+g.addEdge(278, 279, 30 , EAST);
+g.addEdge(279, 280, 30 , EAST);
+g.addEdge(236, 281, 40 , NORTH);
+g.addEdge(281, 282, 305 , EAST);
+g.addEdge(282, 267, 45 , NORTH);//closed loop
+g.addEdge(264, 267, 1 , UP); //E1 stairs level  B - 1
+g.addEdge(267, 271, 1 , UP); //E1 stairs level  1 - 2
+g.addEdge(271, 274, 1 , UP); //E1 stairs level  2 - 3
+g.addEdge(274, 277, 1 , UP); //E1 stairs level  3 - 4
+g.addEdge(277, 280, 1 , UP); //E1 stairs level  4 - 5
+g.addEdge(262, 283, 50 , SOUTH);
+g.addEdge(283, 284, 20 , WEST);
+g.addEdge(283, 285, 40 , SOUTH);
+g.addEdge(285, 286, 70 , EAST);
+g.addEdge(286, 287, 20 , NORTH);
+g.addEdge(286, 288, 40 , EAST);
+g.addEdge(288, 289, 20 , SOUTH);
+g.addEdge(288, 290, 55 , EAST);
+g.addEdge(290, 291, 20 , NORTH);
+g.addEdge(290, 292, 80 , EAST);
+g.addEdge(292, 293, 20 , NORTH);
+g.addEdge(292, 294, 80 , EAST);
+g.addEdge(294, 295, 50 , EAST);
+g.addEdge(295, 296, 95 , NORTH);
+g.addEdge(262, 296, 375 , EAST);////closed loop
+
+
+g.addEdge(267, 297, 65 , SOUTH);
+g.addEdge(267, 298, 640 , EAST);
+g.addEdge(298, 299, 155 , SOUTH);
+g.addEdge(299, 300, 20 , EAST);
+g.addEdge(299, 301, 30 , SOUTH);
+g.addEdge(301, 302, 30 , WEST);
+g.addEdge(296, 303, 260 , EAST);
+g.addEdge(303, 304, 215 , SOUTH);
+g.addEdge(304, 305, 30 , EAST);
+g.addEdge(304, 306, 30 , SOUTH);
+g.addEdge(306, 307, 30 , WEST);
+g.addEdge(270, 308, 130 , SOUTH);
+g.addEdge(308, 309, 20 , WEST);
+g.addEdge(308, 310, 15 , SOUTH);
+g.addEdge(310, 311, 20 , WEST);
+g.addEdge(310, 312, 20 , EAST);
+g.addEdge(308, 313, 40 , EAST);
+g.addEdge(313, 314, 20 , NORTH);
+g.addEdge(313, 315, 75 , EAST);
+g.addEdge(315, 316, 20 , NORTH);
+g.addEdge(315, 317, 20 , SOUTH);
+g.addEdge(315, 318, 80 , EAST);
+g.addEdge(318, 319, 20 , NORTH);
+g.addEdge(318, 320, 20 , SOUTH);
+g.addEdge(318, 321, 70 , EAST);
+g.addEdge(321, 322, 20 , SOUTH);
+g.addEdge(321, 323, 20 , NORTH);
+g.addEdge(321, 324, 80 , EAST);
+g.addEdge(324, 325, 20 , NORTH);
+g.addEdge(324, 326, 20 , SOUTH);
+g.addEdge(324, 327, 80 , EAST);
+g.addEdge(327, 328, 20 , NORTH);
+g.addEdge(327, 329, 20 , SOUTH);
+g.addEdge(327, 330, 80 , EAST);
+g.addEdge(330, 331, 20 , SOUTH);
+g.addEdge(330, 332, 20 , NORTH);
+
+g.addEdge(330, 333, 115 , EAST);
+g.addEdge(333, 334, 155 , SOUTH);
+g.addEdge(334, 335, 30 , EAST);
+g.addEdge(334, 336, 25 , SOUTH);
+g.addEdge(336, 337, 30 , WEST);
+g.addEdge(273, 338, 165 , SOUTH);
+g.addEdge(338, 339, 20 , WEST);
+
+g.addEdge(338, 340, 25 , EAST);
+g.addEdge(340, 341, 20 , NORTH);
+g.addEdge(340, 342, 185 , EAST);
+g.addEdge(342, 343, 20 , NORTH);
+g.addEdge(342, 344, 160 , EAST);
+g.addEdge(344, 345, 20 , NORTH);
+g.addEdge(344, 346, 160 , EAST);
+g.addEdge(346, 347, 20 , NORTH);
+
+g.addEdge(346, 348, 110 , EAST);
+g.addEdge(348, 349, 20 , NORTH);
+g.addEdge(348, 350, 110 , SOUTH);
+g.addEdge(350, 351, 30 , EAST);
+g.addEdge(350, 352, 25 , SOUTH);
+g.addEdge(352, 353, 30 , WEST);
