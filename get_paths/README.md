@@ -32,3 +32,13 @@ NAME PICS
 
 
 TO-DO
+
+
+
+WHEN NODE ARE TOTALLY WRONG
+
+CHANGE IN MYSQL IN BOTH PICTURES AND COOR_ID_TABLE
+Edit the untouched pictures and with arrows
+Change SQL in supabase , delete and upload new updated pictures
+Check in Edges if anything is wrong and rectify
+Change in desmos
