@@ -3,7 +3,6 @@
 (250,690,-390,7, 'North' , 'None' , 'Corner' , 'NIL'),
 (250,690,-390,7, 'North' , 'East' , 'Corner' , 'NIL'),
 (250,690,-390,7, 'West' , 'West' , 'Corner' , 'NIL'),
-
 (251,755,-390,7, 'East' , 'None' , 'T_junction' , 'NIL'),
 (251,755,-390,7, 'South' , 'None' , 'T_junction' , 'NIL'),
 (251,755,-390,7, 'West' , 'None' , 'T_junction' , 'NIL'),
@@ -211,7 +210,6 @@
 (278,1495,-335,11, 'East' , 'None' , 'Stairs' , 'NIL'),
 (278,1495,-335,11, 'East' , 'Down' , 'Stairs' , 'NIL'),
 (278,1495,-335,11, 'West' , 'None' , 'Stairs' , 'NIL'),
-
 (279,1435,-335,12, 'West' , 'Down' , 'Elevator' , 'NIL'),
 (279,1435,-335,12, 'West' , 'None' , 'Elevator' , 'NIL'),
 (279,1435,-335,12, 'East' , 'None' , 'Elevator' , 'NIL'),
@@ -567,8 +565,6 @@
 (331,1970,-465,9, 'West' , 'West' , 'Cross_junction' , 'NIL'),
 (332,1970,-485,9, 'None' , 'None' , 'Room' , 'E1-06-01'),
 (333,1970,-445,9, 'None' , 'None' , 'Room' , 'E1-06-16'),
-
-
 (334,2085,-465,9, 'North' , 'None' , 'T_junction' , 'NIL'),
 (334,2085,-465,9, 'East' , 'None' , 'T_junction' , 'NIL'),
 (334,2085,-465,9, 'North' , 'North' , 'T_junction' , 'NIL'),
@@ -621,7 +617,6 @@
 (339,1465,-500,10, 'West' , 'North' , 'T_junction' , 'NIL'),
 (339,1465,-500,10, 'West' , 'East' , 'T_junction' , 'NIL'),
 (340,1445,-500,10, 'None' , 'None' , 'Room' , 'E1-07-17'),
-
 (341,1490,-500,10, 'South' , 'None' , 'T_junction' , 'NIL'),
 (341,1490,-500,10, 'East' , 'None' , 'T_junction' , 'NIL'),
 (341,1490,-500,10, 'East' , 'North' , 'T_junction' , 'NIL'),
@@ -662,7 +657,6 @@
 (347,1995,-500,10, 'West' , 'North' , 'T_junction' , 'NIL'),
 (347,1995,-500,10, 'South' , 'West' , 'T_junction' , 'NIL'),
 (348,1995,-480,10, 'None' , 'None' , 'Room' , 'E1-07-25'),
-
 (349,2105,-500,10, 'North' , 'North' , 'T_junction' , 'NIL'),
 (349,2105,-500,10, 'North' , 'None' , 'T_junction' , 'NIL'),
 (349,2105,-500,10, 'South' , 'None' , 'T_junction' , 'NIL'),

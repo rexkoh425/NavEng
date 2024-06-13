@@ -35,9 +35,9 @@ g.addEdge(278, 279, 30 , EAST);
 g.addEdge(279, 280, 30 , EAST);
 g.addEdge(236, 281, 40 , NORTH);
 g.addEdge(281, 282, 305 , EAST);
-g.addEdge(282, 267, 45 , NORTH);//closed loop
-g.addEdge(264, 267, 1 , UP); //E1 stairs level  B - 1
-g.addEdge(267, 271, 1 , UP); //E1 stairs level  1 - 2
+g.addEdge(282, 267, 45 , NORTH);//closed loop E1 LEVEL B1
+g.addEdge(264, 268, 1 , UP); //E1 stairs level  B - 1
+g.addEdge(268, 271, 1 , UP); //E1 stairs level  1 - 2
 g.addEdge(271, 274, 1 , UP); //E1 stairs level  2 - 3
 g.addEdge(274, 277, 1 , UP); //E1 stairs level  3 - 4
 g.addEdge(277, 280, 1 , UP); //E1 stairs level  4 - 5
@@ -55,9 +55,7 @@ g.addEdge(292, 293, 20 , NORTH);
 g.addEdge(292, 294, 80 , EAST);
 g.addEdge(294, 295, 50 , EAST);
 g.addEdge(295, 296, 95 , NORTH);
-g.addEdge(262, 296, 375 , EAST);////closed loop
-
-
+g.addEdge(262, 296, 375 , EAST);////closed loop E1 LEVEL B1
 g.addEdge(267, 297, 65 , SOUTH);
 g.addEdge(267, 298, 640 , EAST);
 g.addEdge(298, 299, 155 , SOUTH);
@@ -94,7 +92,6 @@ g.addEdge(327, 329, 20 , SOUTH);
 g.addEdge(327, 330, 80 , EAST);
 g.addEdge(330, 331, 20 , SOUTH);
 g.addEdge(330, 332, 20 , NORTH);
-
 g.addEdge(330, 333, 115 , EAST);
 g.addEdge(333, 334, 155 , SOUTH);
 g.addEdge(334, 335, 30 , EAST);
@@ -102,7 +99,6 @@ g.addEdge(334, 336, 25 , SOUTH);
 g.addEdge(336, 337, 30 , WEST);
 g.addEdge(273, 338, 165 , SOUTH);
 g.addEdge(338, 339, 20 , WEST);
-
 g.addEdge(338, 340, 25 , EAST);
 g.addEdge(340, 341, 20 , NORTH);
 g.addEdge(340, 342, 185 , EAST);
@@ -111,10 +107,16 @@ g.addEdge(342, 344, 160 , EAST);
 g.addEdge(344, 345, 20 , NORTH);
 g.addEdge(344, 346, 160 , EAST);
 g.addEdge(346, 347, 20 , NORTH);
-
 g.addEdge(346, 348, 110 , EAST);
 g.addEdge(348, 349, 20 , NORTH);
 g.addEdge(348, 350, 110 , SOUTH);
 g.addEdge(350, 351, 30 , EAST);
 g.addEdge(350, 352, 25 , SOUTH);
 g.addEdge(352, 353, 30 , WEST);
+g.addEdge(337 , 353, 1 , UP);//////E1 elevator floor 6 -7 
+g.addEdge(335 , 351, 1 , UP);//////E1 stairs floor 6 -7
+g.addEdge(302 , 337, 1 , UP);//////E1 elevator floor 5 - 6 
+g.addEdge(300 , 335, 1 , UP);//////E1 stairs floor 5 - 6
+g.addEdge(307 , 302 , 1 , UP);//////E1 elevator floor 4 - 5 
+g.addEdge(305 , 300 , 1 , UP);//////E1 stairs floor 4 - 5
+

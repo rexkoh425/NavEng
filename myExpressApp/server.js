@@ -204,6 +204,27 @@ app.get('/' , (req ,res) => {
     res.sendFile(filePath);
 });
 
+app.post('/getVector' , (req ,res) => {
+
+    const inputData = req.body;
+    const source_query = `SELECT x_coordinate , y_coordinate , z_coordinate FROM coor_id_pair WHERE node_id = ${inputData.VectorSource}`;
+    connection.query(source_query, (err, source_results) => {
+        if (err){
+            console.error('Error querying MySQL:', err);
+            return;
+        }
+        
+        const dest_query = `SELECT x_coordinate , y_coordinate , z_coordinate FROM coor_id_pair WHERE node_id = ${inputData.VectorDest}`;
+        connection.query(dest_query, (err, dest_results) => {
+            if (err){
+                console.error('Error querying MySQL:', err);
+                return;
+            }
+            res.send(`vector((${source_results[0]['x_coordinate']} , ${source_results[0]['y_coordinate']} , ${source_results[0]['z_coordinate']}) , (${dest_results[0]['x_coordinate']} , ${dest_results[0]['y_coordinate']} , ${dest_results[0]['z_coordinate']}))`)
+        });
+    });
+})
+
 app.post('/Senddata' , (req ,res) => {
 
     const inputData = req.body;

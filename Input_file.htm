@@ -86,6 +86,15 @@
                 <button type = "submit" id = "delete"> Delete</button>
             </form>
         </div>
+        <div>
+            <form action = "/getVector" method = "post" id = "getVector">
+                <label for = "VectorSource">Vector Source is </label>
+                <input type= "number" id = "VectorSource" name = "VectorSource" required>
+                <label for = "VectorDest"> and Vector Dest is </label>
+                <input type= "number" id = "VectorDest" name = "VectorDest" required><br>
+                <button type = "submit" id = "getvector"> Get </button>
+            </form>
+        </div>
         <div id = "response" class = 'img_container'> </div>
         <script>
             fetch('/Senddata', { method: 'POST' })
