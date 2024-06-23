@@ -153,7 +153,7 @@ function writeFile(inputData , current_node ,  outputData , num_of_dir , res , d
 
 function WriteDesmos(results , destination){
     const filePath = `${__dirname}\\..\\get_paths\\Desmos_input.txt`;
-    const element =  `vector((${results[0]['x_coordinate']} , ${results[0]['y_coordinate']} , ${results[0]['z_coordinate']}a) ,(${destination[0]['x_coordinate']} , ${destination[0]['y_coordinate']} , ${destination[0]['z_coordinate']}a))` + "\n";
+    const element =  `vector((${results[0]['x_coordinate']} , ${results[0]['y_coordinate']} , ${results[0]['z_coordinate']/40}a) ,(${destination[0]['x_coordinate']} , ${destination[0]['y_coordinate']} , ${destination[0]['z_coordinate']/40}a))` + "\n";
     fs.appendFile(filePath, element, (err) => {
         if (err) {
             console.error(err);
