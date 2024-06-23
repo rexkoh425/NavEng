@@ -153,7 +153,7 @@ function writeFile(inputData , current_node ,  outputData , num_of_dir , res , d
 
 function WriteDesmos(results , destination){
     const filePath = `${__dirname}\\..\\get_paths\\Desmos_input.txt`;
-    const element =  `vector((${results[0]['x_coordinate']} , ${results[0]['y_coordinate']} , ${results[0]['z_coordinate']}) ,(${destination[0]['x_coordinate']} , ${destination[0]['y_coordinate']} , ${destination[0]['z_coordinate']}))` + "\n";
+    const element =  `vector((${results[0]['x_coordinate']} , ${results[0]['y_coordinate']} , ${results[0]['z_coordinate']}a) ,(${destination[0]['x_coordinate']} , ${destination[0]['y_coordinate']} , ${destination[0]['z_coordinate']}a))` + "\n";
     fs.appendFile(filePath, element, (err) => {
         if (err) {
             console.error(err);
@@ -177,12 +177,6 @@ function WriteEdge(source , dest , weight , direction){
     });
 }
 
-function abs(number){
-    if(number > 0){
-        return number;
-    }
-    return  0 - number;
-}
 const connection = mysql.createConnection({
     host: 'localhost',
     port: '3306',
