@@ -18,7 +18,7 @@ for file_name in os.listdir(folder_path):
         z_coord = parts[3]
         print(z_coord)
         new_filename = "_".join(parts) + extension
-        new_file_path = os.path.join("./Rooms", new_filename)
+        new_file_path = os.path.join("./With_arrows", new_filename)
 
         try:
             # Move the file to the new path
