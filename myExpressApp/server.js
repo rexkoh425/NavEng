@@ -225,7 +225,7 @@ app.post('/Senddata' , (req ,res) => {
     if(!inputData.room_num){
         return;
     }
-
+    
     const query = `SELECT MAX(node_id) FROM coor_id_pair`;
     connection.query(query, (err, results) => {
         if (err){
