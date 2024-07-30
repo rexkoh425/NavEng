@@ -222,6 +222,7 @@ app.post('/getVector' , (req ,res) => {
 app.post('/Senddata' , (req ,res) => {
 
     const inputData = req.body;
+
     if(!inputData.room_num){
         return;
     }
