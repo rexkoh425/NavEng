@@ -3,7 +3,7 @@ import axios from "axios"
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { Typography } from "@mui/material";
+import Typography from "@mui/material/Typography";
 import Autocomplete from '@mui/material/Autocomplete';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
@@ -24,10 +24,8 @@ import Instructions from "./Instructions";
 import DestinationNotification from "./DestinationNotification";
 import TopDownMap from "./TopDownMap";
 import ImageOutput from "./ImageOutput";
-import { styled } from '@mui/system';
-import CircularProgress, {
-    circularProgressClasses,
-} from '@mui/material/CircularProgress';
+import CircularProgress from "@mui/material/CircularProgress";
+import circularProgressClasses from '@mui/material/CircularProgress';
 
 
 function PromptForm() {
@@ -78,11 +76,18 @@ function PromptForm() {
 
 
     const Local = process.env.REACT_APP_LOCAL;
+    const repo = process.env.REACT_APP_REPO;
+
     let websitelink = ""
     if (Local == "true") {
         websitelink = "http://localhost:4000"
     } else {
-        websitelink = "https://naveng-backend-vercel.vercel.app"
+        if(repo == "rex"){
+            websitelink = "https://orbital-website-cyan.vercel.app"
+        }else{
+            websitelink = "https://naveng-backend-vercel.vercel.app"
+        }
+        
     }
 
     function hasSameEntries(array) {
@@ -362,12 +367,18 @@ function PromptForm() {
                 node_id: blockedNodeID
             };
 
-            const response = await axios.post(websitelink + '/getfloor', postData);
+            const response = await axios.post(websitelink + '/getfloor', postData, {
+                timeout: 30000 
+            });
             setGraphnodes(response.data)
 
 
         } catch (error) {
-            console.error('Error getting floor:', error);
+            if (error.code === 'ECONNABORTED') {
+                console.error('Error getting floor: Request timed out');
+            } else {
+                console.error('Error getting floor:', error);
+            }
         }
     };
 

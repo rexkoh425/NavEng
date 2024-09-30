@@ -1366,32 +1366,30 @@ router.post('/insertBlocked' , async (req ,res ) => {
 router.post('/getfloor' , async (req , res) => {
     const inputData = req.body.node_id; 
     let targeted_z = 0;
-    let nodes_with_same_z = new Set();
+    let nodes_with_same_z = [];
     let node_label_map = {};
     try {
         targeted_z = await supa.get_z_coordinate(inputData);
     } catch (error) {
+        console.log("error");
         res.status(500).json({ error: error.message });
     }
     
     try {
         const { data, error } = await supabase
-            .from('pictures')
+            .from('z_map')
             .select('node_id , self_type')
             .eq('z_coordinate', targeted_z);
 
             data.forEach(result => {
-                const prev_size = nodes_with_same_z.size;
-                nodes_with_same_z.add(result.node_id);
-                const aft_size = nodes_with_same_z.size;
-                if(aft_size > prev_size){
-                    node_label_map[`${result.node_id}`] = result.self_type;
-                }
+                nodes_with_same_z.push(result.node_id);
+                node_label_map[`${result.node_id}`] = result.self_type;
             });
         if (error) {
             throw error;
         }
     } catch (error) {
+        console.log("error");
         res.status(500).json({ error: error.message });
     }
 
@@ -1433,7 +1431,7 @@ router.post('/getfloor' , async (req , res) => {
             })
             res.send(FullMapObj);
         }catch(error){
-            
+            console.log("error");
         }
         
         cppProcess.on('error', (error) => {
