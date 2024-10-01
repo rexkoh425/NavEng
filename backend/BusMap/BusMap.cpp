@@ -1,5 +1,5 @@
-#include "shortest_path.cpp"
-#include "graph.cpp"
+#include "ShortestBusPath.cpp"
+#include "BusGraph.cpp"
 #include "BusMap.h"
 #include <cstdlib>
 #include <stdlib.h>
@@ -7,15 +7,15 @@
 #include <chrono>
 #include <string>
 #include <sstream>
-#include "rapidjson/document.h"
-#include "rapidjson/writer.h"
-#include "rapidjson/stringbuffer.h"
+#include "../Dijkstra/rapidjson/document.h"
+#include "../Dijkstra/rapidjson/writer.h"
+#include "../Dijkstra/rapidjson/stringbuffer.h"
 using namespace std;
 using namespace rapidjson;
 
 
 int main(){
-    
+    /*
     std::string inputData;
     std::getline(std::cin, inputData);
 
@@ -27,7 +27,6 @@ int main(){
 
     int source = 0;
     int dest = 0;
-    vector<int> nodes_array;
 
     // Access JSON data
     if (doc.IsObject()) {
@@ -41,12 +40,15 @@ int main(){
       std::cerr << "Input is not a JSON object" << std::endl;
       return 1;
     }
-    
-    Graph BusMap = createBusGraph();
+    */
+
+    int source = 0;
+    int dest = 2;
+    BusGraph BusMap = createBusGraph();
 
       Path result = shortestPath(BusMap , source ,  dest);
       vector<int> final_path = result.path();
-      vector<int> final_directions = result.direction();
+      vector<string> lines = result.lines();
       vector<int> dist_between = result.dist_array();
       int distance = result.total_distance();
       
@@ -58,9 +60,9 @@ int main(){
         }
       }
       cout << "|";
-      size = final_directions.size();
+      size = lines.size();
       for(int i = 0 ; i < size ; i++){
-        cout << final_directions[i];
+        cout << lines[i];
         if(i != size-1){
           cout << ",";
         }

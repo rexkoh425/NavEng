@@ -1,8 +1,12 @@
-#include "graph.h"
+#include "BusGraph.h"
 
-Graph createBusGraph(){
+BusGraph createBusGraph(){
     vector<int> blocked_nodes;
-    Graph g(707  , blocked_nodes);
-    g.addEdge(0, 1, 50 , EAST , undirected);
+    BusGraph g(4);
+    g.addEdge(0, 1, 50 , "A1");
+    g.addEdge(1, 2, 50 , "A1");
+    g.addEdge(2, 3, 50 , "A1");
+    g.addEdge(3, 4, 50 , "A1");
 
+    return g;
 }
